@@ -3,7 +3,6 @@
 
 import json
 import os
-import shlex
 import subprocess
 import sys
 import urllib.parse
@@ -30,8 +29,7 @@ def get_birds(_bird, _country):
 
 def make_dir(_dirname):
         if not os.path.isdir(_dirname):
-            command = shlex.split('mkdir {0}'.format(_dirname))
-            subprocess.run(command)
+            subprocess.run('mkdir', '{0}'.format(_dirname))
 
 country = sys.argv[1]
 bird = sys.argv[2]

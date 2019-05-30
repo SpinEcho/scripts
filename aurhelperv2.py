@@ -3,13 +3,13 @@
 
 import argparse
 import json
-import shlex
 import subprocess
 import urllib.parse
 import urllib.request
 from sys import exit
 
 # Huvudfunktioner
+
 
 def download(name):
     get_result('info', name, False)
@@ -18,8 +18,8 @@ def download(name):
 
 
 def install(package):
-    command = shlex.split('makepkg -ci')
-    subprocess.run(command,cwd='/home/ulf/AUR/{}'.format(package))
+    subprocess.run(['makepkg', '-ci'], cwd='/home/ulf/AUR/{}'.format(package))
+
 
 def list_packages():
     results = pacman_search_foreign()
@@ -71,7 +71,7 @@ def update():
             print('Uppdaterad')
         if 'Uppdaterar' in git_pull:
             update_list.append(name)
-        
+
         print()
 
     if update_list:

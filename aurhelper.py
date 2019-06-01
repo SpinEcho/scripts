@@ -10,10 +10,15 @@ from sys import exit
 
 # Huvudfunktioner
 
+
 def download(name):
     get_result('info', name, False)
     subprocess.run(['mkdir', '/home/ulf/AUR/{}'.format(name)])
     subprocess.run(['git', 'clone', 'https://aur.archlinux.org/{}.git'.format(name), '/home/ulf/AUR/{}'.format(name)])
+
+
+def install(package):
+    subprocess.run(['makepkg', '-ci'], cwd='/home/ulf/AUR/{}'.format(package))
 
 
 def list_packages():
@@ -66,7 +71,7 @@ def update():
             print('Uppdaterad')
         if 'Uppdaterar' in git_pull:
             update_list.append(name)
-        
+
         print()
 
     if update_list:
@@ -129,6 +134,9 @@ ap.add_argument('-u', '--update', action='store_true',
 ap.add_argument('-s', '--search',
                 help='Söker efter paket i AUR')
 
+ap.add_argument('-i', '--install',
+                help='Installerar paket från AUR')
+
 ap.add_argument('-ss', '--searchexact',
                 help='Söker efter paket i AUR med exakt matchning')
 
@@ -146,6 +154,9 @@ args = ap.parse_args()
 
 if args.download:
     download(args.download)
+
+if args.install:
+    install(args.install)
 
 if args.list_packages:
     list_packages()
